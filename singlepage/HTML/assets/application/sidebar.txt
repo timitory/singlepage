@@ -1,0 +1,248 @@
+import React, { useState } from 'react';
+import {
+    FaTh,
+    FaBars,
+    FaUserAlt,
+    FaRegChartBar,
+    FaCommentAlt,
+    FaShoppingBag,
+    FaThList
+}from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
+
+
+const Sidebar = ({children}) => {
+    const[isOpen ,setIsOpen] = useState(false);
+    const toggle = () => setIsOpen (!isOpen);
+    const menuItem=[
+        {
+            path:"/",
+            name:"Dashboard",
+            icon:<FaTh/>
+        },
+        {
+            path:"/about",
+            name:"About",
+            icon:<FaUserAlt/>
+        },
+        {
+            path:"/analytics",
+            name:"Analytics",
+            icon:<FaRegChartBar/>
+        },
+        {
+            path:"/comment",
+            name:"Comment",
+            icon:<FaCommentAlt/>
+        },
+        {
+            path:"/product",
+            name:"Product",
+            icon:<FaShoppingBag/>
+        },
+        {
+            path:"/productList",
+            name:"Product List",
+            icon:<FaThList/>
+        }
+    ]
+    return (
+        <div className="container">
+           <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
+               <div className="top_section">
+                   <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
+                   <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
+                       <FaBars onClick={toggle}/>
+                   </div>
+               </div>
+               {
+                   menuItem.map((item, index)=>(
+                       <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                           <div className="icon">{item.icon}</div>
+                           <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
+                       </NavLink>
+                   ))
+               }
+           </div>
+           <main>{children}</main>
+        </div>
+    );
+};
+
+export default Sidebar;
+
+
+
+
+import React from 'react';
+
+const About = () => {
+    return (
+        <div>
+            <h1>About page</h1>
+        </div>
+    );
+};
+
+export default About;
+
+
+
+
+import React from 'react';
+
+const Analytics = () => {
+    return (
+        <div>
+            <h1>Analytics page</h1>
+        </div>
+    );
+};
+
+export default Analytics;
+
+
+import React from 'react';
+
+const Dashboard = () => {
+    return (
+        <div>
+            <h1>dashboard page</h1>
+        </div>
+    );
+};
+
+export default Dashboard;
+
+
+import React from 'react';
+
+const Comment = () => {
+    return (
+        <div>
+            <h1>Comment page</h1>
+        </div>
+    );
+};
+
+export default Comment;
+
+
+import React from 'react';
+
+const Product = () => {
+    return (
+        <div>
+            <h1>product page</h1>
+        </div>
+    );
+};
+
+export default Product;
+
+
+
+
+import React from 'react';
+
+const ProductList = () => {
+    return (
+        <div>
+            <h1>product list page</h1>
+        </div>
+    );
+};
+
+export default ProductList;
+
+
+
+*{
+    margin:0;
+    padding:0;
+    text-decoration: none;
+}
+.container{
+    display:flex;
+}
+main{
+    width: 100%;
+    padding: 20px;
+}
+.sidebar{
+    background: #000;
+    color: #fff;
+    height: 100vh;
+    width: 200px;
+    transition: all 0.5s;
+}
+.top_section{
+    display: flex;
+    align-items:center;
+    padding:20px 15px;
+}
+.logo{
+    font-size: 30px;
+}
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 50px;
+}
+.link{
+    display: flex;
+    color: #fff;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+}
+.link:hover{
+    background:lightskyblue;
+    color: #000;
+    transition: all 0.5s;
+}
+.active{
+    background: lightskyblue;
+    color: #000;
+}
+.icon, .link_text{
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+import React from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import Dashboard from './pages/Dashboard.jsx';
+import About from './pages/About.jsx';
+import Analytics from './pages/Analytics.jsx';
+import Comment from './pages/Comment.jsx';
+import Product from './pages/Product.jsx';
+import ProductList from './pages/ProductList.jsx';
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Sidebar>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/comment" element={<Comment />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/productList" element={<ProductList />} />
+        </Routes>
+      </Sidebar>
+    </BrowserRouter>
+  );
+};
+
+export default App;
